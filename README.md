@@ -1,76 +1,70 @@
-# Image to Text and Translation Script
+# Image2Text Translate
 
-This script extracts text from an image using Optical Character Recognition (OCR) and translates the extracted text into Persian (Farsi). It utilizes the `pytesseract` library for OCR and the `googletrans` library for translation.
+A short Python script that extracts English text from an image with **Tesseract OCR** and translates it sentence by sentence into **Persian (Farsi)** with `googletrans`.
+
+## How It Works
+
+`src/main.py`:
+
+1. Sets the path to the Tesseract executable (`pytesseract.pytesseract.tesseract_cmd`).
+2. Opens the image with Pillow.
+3. Extracts the text with `pytesseract.image_to_string`.
+4. Splits the text into sentences on `.` and prints each one.
+5. Translates each non-empty sentence into Persian (`dest='fa'`) with `googletrans.Translator` and prints the translation. If a sentence fails to translate, the script prints an error message and continues.
+
+A sample input image is in `photo/2.png`: an English paragraph about the early days of the web.
 
 ## Prerequisites
 
-Before running the script, ensure you have the following installed:
+- Python 3
+- [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) installed locally
+- Python packages:
 
-1. **Python**: The script is written in Python. Make sure you have Python installed on your system. You can download it from [python.org](https://www.python.org/).
+  ```bash
+  pip install pytesseract pillow googletrans==4.0.0-rc1
+  ```
 
-2. **Tesseract-OCR**: The script uses Tesseract for OCR. Download and install Tesseract from [Tesseract's GitHub page](https://github.com/tesseract-ocr/tesseract). Make sure to note the installation path, as it will be needed in the script.
-
-3. **Python Libraries**: Install the required Python libraries using pip:
-   ```bash
-   pip install pytesseract pillow googletrans==4.0.0-rc1
-   ```
-
-   - `pytesseract`: A Python wrapper for Tesseract.
-   - `Pillow`: A Python Imaging Library (PIL) fork used to open and manipulate images.
-   - `googletrans`: A Python library for Google Translate API.
-
-## Script Overview
-
-The script performs the following steps:
-
-1. **Set Tesseract Path**: The path to the Tesseract executable is set.
-2. **Open Image**: The script opens an image file from a specified path.
-3. **Extract Text**: The text is extracted from the image using `pytesseract`.
-4. **Split Text into Sentences**: The extracted text is split into sentences.
-5. **Translate Sentences**: Each sentence is translated into Persian (Farsi) using `googletrans`.
-6. **Print Sentences**: Both the original and translated sentences are printed.
+`googletrans` calls Google Translate online, so the script needs internet access.
 
 ## Usage
 
-1. **Set the Tesseract Path**: Update the `pytesseract.pytesseract.tesseract_cmd` variable with the correct path to your Tesseract installation.
+1. Clone the repository:
 
-2. **Set the Image Path**: Update the `Image.open()` function with the correct path to your image file.
-
-3. **Run the Script**: Execute the script using Python:
    ```bash
-   python script_name.py
+   git clone https://github.com/sedwna/Image2Text-Translate.git
+   cd Image2Text-Translate
    ```
 
-   Replace `script_name.py` with the name of your script file.
+2. Edit the two hard-coded paths in `src/main.py`:
+   - `pytesseract.pytesseract.tesseract_cmd`: your Tesseract executable (the default is `C:\Program Files\Tesseract-OCR\tesseract.exe`)
+   - `Image.open(...)`: the image to read, for example `photo/2.png`
 
-## Example
+3. Run the script:
 
-Given an image containing the text:
+   ```bash
+   python src/main.py
+   ```
+
+The script prints the extracted sentences first, then their Persian translations.
+
+## Customization
+
+- **Target language:** change `dest='fa'` in `translator.translate()` to any language code from `googletrans.LANGUAGES`.
+- **OCR quality:** results depend on image quality, so clear, high-contrast text works best.
+
+## Project Structure
+
 ```
-Hello, world! This is a test.
+Image2Text-Translate/
+├── photo/
+│   └── 2.png          # sample input image
+├── src/
+│   └── main.py        # OCR + translation script
+└── README.md
 ```
-
-The script will output:
-```
-Hello, world!
-This is a test.
-سلام دنیا!
-این یک تست است.
-```
-
-## Notes
-
-- **Language Support**: The script is currently set to translate text into Persian (`fa`). You can change the destination language by modifying the `dest` parameter in the `translator.translate()` function. Refer to the `LANGUAGES` dictionary in `googletrans` for supported language codes.
-
-- **Error Handling**: The script includes basic error handling for translation errors. If a sentence cannot be translated, an error message will be printed.
-
-- **Image Quality**: The accuracy of the OCR depends on the quality of the input image. Ensure the image is clear and the text is legible for best results.
-
 
 ## Acknowledgments
 
 - [Tesseract OCR](https://github.com/tesseract-ocr/tesseract)
-- [Google Translate API](https://pypi.org/project/googletrans/)
+- [googletrans](https://pypi.org/project/googletrans/)
 - [Pillow](https://python-pillow.org/)
-
----
