@@ -1,3 +1,29 @@
+<!-- visual-showroom:start -->
+<p align="center">
+  <img src="docs/showroom/readme-banner.svg" alt="Image2Text Translate — repository cover" width="100%">
+</p>
+
+<p align="center">
+  <strong>Image2Text Translate</strong><br>
+  MACHINE LEARNING &amp; LANGUAGE
+</p>
+
+<p align="center">
+  <a href="https://sajjad-dehghan-personal-site.prisoner-sedwna.workers.dev/projects/image2text-translate"><strong>Explore the showroom ↗</strong></a> ·
+  <a href="#implementation--original-documentation">Setup &amp; implementation ↓</a>
+</p>
+
+Reads English text out of an image with Tesseract OCR and translates it into Persian.
+
+This is a code/notebook project. No product-interface screenshot is published; the graphic above is a repository cover, not a fabricated interface.
+
+## Implementation & original documentation
+
+The existing run instructions, architecture, limitations and credits are preserved below.
+
+---
+<!-- visual-showroom:end -->
+
 # Image2Text Translate
 
 A short Python script that extracts English text from an image with **Tesseract OCR** and translates it sentence by sentence into **Persian (Farsi)** with `googletrans`.
