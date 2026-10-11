@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fa" dir="ltr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f5f1">
+  <title>عکس به متن و ترجمه | Image2Text</title>
+  <meta name="description" content="استخراج متن انگلیسی از تصویر، ویرایش و ترجمه به فارسی در یک فضای ساده.">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="vendor/tesseract.min.js"></script>
+  <script type="module" src="app.js"></script>
+</head>
+<body dir="rtl">
+<a class="skip" href="#workspace">رفتن به ابزار</a>
+<main>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="صفحهٔ اصلی Image2Text"><span class="brand-icon" aria-hidden="true">文</span><span dir="ltr">Image<span class="brand-two">2</span>Text<span class="brand-sub">TRANSLATE</span></span></a>
+    <span class="top-note">از یک تصویر، به یک متن خوانا.</span>
+    <a class="source-link" href="https://github.com/sajjad-dehghan/Image2Text-Translate" target="_blank" rel="noopener">کد پروژه <span aria-hidden="true">↗</span></a>
+  </header>
+  <section class="intro" aria-labelledby="title">
+    <p class="eyebrow">بخوان. ویرایش کن. ترجمه کن.</p>
+    <h1 id="title">متنِ توی عکس رو<br><span>به فارسی بخون.</span></h1>
+    <p class="lead">یک عکس از متن انگلیسی انتخاب کن.<br>متنش رو دربیار، اگر لازم بود اصلاحش کن و ترجمه‌اش رو بگیر.</p>
+  </section>
+  <div class="workspace" id="workspace">
+    <section class="image-card" aria-labelledby="image-title">
+      <div class="card-heading"><div><span class="step">۰۱</span><h2 id="image-title">تصویر اصلی</h2></div><button id="reset" class="text-button" type="button" disabled>شروع دوباره ↺</button></div>
+      <input id="file" type="file" accept="image/png,image/jpeg,image/webp" class="visually-hidden">
+      <button class="dropzone" id="dropzone" type="button" aria-describedby="file-help">
+        <span id="empty-image"><svg viewBox="0 0 64 64" width="64" height="64" fill="none" aria-hidden="true"><rect x="10" y="8" width="44" height="48" rx="9" stroke="currentColor" stroke-width="1.6"/><circle cx="24" cy="23" r="4" stroke="currentColor" stroke-width="1.6"/><path d="m15 47 13-14 10 9 6-6 6 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><strong>عکس رو اینجا بنداز</strong><span>یا برای انتخاب فایل کلیک کن</span></span>
+        <img id="preview" alt="تصویر انتخاب‌شده برای استخراج متن" hidden>
+        <span id="replace-label" class="replace-label" hidden>انتخاب یک عکس دیگر</span>
+      </button>
+      <div class="file-meta"><span id="filename">هنوز تصویری انتخاب نشده</span><span id="file-help" dir="ltr">PNG · JPG · WEBP / 10 MB</span></div>
+      <div class="image-actions"><button id="extract" class="primary" type="button" disabled>استخراج متن <span aria-hidden="true">←</span></button><button id="sample" class="secondary" type="button">امتحان با عکس نمونه</button></div>
+      <p class="hint">عکس در همین مرورگر پردازش می‌شه. می‌تونی عکس رو از کلیپ‌بورد هم اینجا بچسبونی.</p>
+    </section>
+    <section class="text-card" aria-labelledby="text-title">
+      <div class="card-heading"><div><span class="step">۰۲</span><h2 id="text-title">متن و ترجمه</h2></div><span class="language-pair" dir="ltr">EN <span>→</span> FA</span></div>
+      <div class="editor-block">
+        <div class="editor-heading"><label for="original">متن انگلیسی <span class="small-note">قابل ویرایش</span></label><button id="copy-original" class="text-button" type="button" disabled>کپی متن</button></div>
+        <textarea id="original" dir="ltr" lang="en" maxlength="12000" spellcheck="false" placeholder="متن استخراج‌شده اینجا می‌آد؛ می‌تونی خودت هم متن وارد کنی."></textarea>
+        <div class="editor-meta"><span id="original-count">۰ نویسه</span><span id="ocr-quality"></span></div>
+      </div>
+      <div class="translation-bar"><button id="translate" class="primary" type="button" disabled>ترجمه به فارسی <span aria-hidden="true">↙</span></button><span>فقط متن، بعد از کلیک، برای ترجمه به گوگل فرستاده می‌شه.</span></div>
+      <div class="editor-block translated-block">
+        <div class="editor-heading"><label for="translated">ترجمهٔ فارسی</label><button id="copy-translated" class="text-button" type="button" disabled>کپی ترجمه</button></div>
+        <textarea id="translated" readonly placeholder="ترجمهٔ فارسی اینجا نمایش داده می‌شه."></textarea>
+      </div>
+      <div class="output-footer"><span id="api-state">در حال بررسی اتصال ترجمه…</span><button id="download" class="text-button" type="button" disabled>دریافت فایل متن ↓</button></div>
+    </section>
+  </div>
+  <div class="status-area" aria-live="polite" role="status"><span id="status-dot"></span><p id="status">برای شروع یک عکس انتخاب کن، یا عکس نمونه رو امتحان کن.</p><progress id="progress" max="1" value="0" hidden aria-label="پیشرفت استخراج متن"></progress></div>
+  <footer><span>Image2Text Translate <span class="footer-separator">/</span> ساختهٔ سجاد دهقان</span><span>استخراج با Tesseract · ترجمه با googletrans</span></footer>
+</main>
+</body></html>

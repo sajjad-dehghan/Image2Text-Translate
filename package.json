@@ -1,0 +1,12 @@
+{
+  "name": "image2text-translate-web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare:web": "node scripts/prepare-web.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "start": "python src/server.py"
+  },
+  "dependencies": { "tesseract.js": "6.0.1" }
+}
